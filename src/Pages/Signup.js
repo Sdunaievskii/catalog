@@ -1,43 +1,11 @@
-import React, {useState,useContext,useEffect} from 'react';
-import  firebase from 'firebase';
-import "firebase/auth";
+import React from 'react';
+import {useAuth} from '../Context/AuthContext'
 
 
-const Authorization = () => {
+const Signup = () => {
 
-    const [formState, setFormState] = useState({
-        email:'',
-        password:''
-    });
-    const [statusUser, getStatusUser] = useState({
-        status:false
-    })
-
-    const [errors, setErrors] = useState({
-        error:'',
-    })
+    const {handleChange,signUp,errors} = useAuth();
     
-    const handleChange = ({target:{id, value}})=>{
-        setFormState({...formState,[id]:value}) 
-    }
-
-    const signUp = () => {
-        const {email, password} = formState;
-       
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .catch((err)=> {
-                setErrors({error:err.message})
-            });
-
-            firebase.auth().onAuthStateChanged((user) =>{
-                if (user) {
-                    getStatusUser(!statusUser.status)
-                   
-                } 
-            })              
-    }
-    console.log(statusUser, 'вход выполнене');
-
     return (
         <section>
             <form className='form'>
@@ -73,4 +41,4 @@ const Authorization = () => {
 };
 
 
-export default Authorization;
+export default Signup;
